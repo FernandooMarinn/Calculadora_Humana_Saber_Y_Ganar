@@ -4,6 +4,19 @@ import random
 def fallo(contador):
     return print("Has fallado. Has conseguido {} veces seguidas.".format(contador))
 
+def preguntar_numero():
+    respuesta = input()
+    while not comprobar_si_numero(respuesta):
+        print("No has introducido un numero.")
+        respuesta = input("")
+    return int(respuesta)
+
+def comprobar_si_numero(numero):
+    try:
+        int(numero)
+        return True
+    except ValueError:
+        return False
 
 def primo(numero):
     lista = []
@@ -24,8 +37,9 @@ def calculadora_humana_normal():
     while stop:
         if inicio < 50:
             mult = random.randint(2, 5)
-            operacion = int(input("Por {} \n".format(mult)))
-            if operacion == mult * inicio:
+            print("Por {} \n".format(mult))
+            respuesta = preguntar_numero()
+            if respuesta == mult * inicio:
                 contador += 1
                 inicio *= mult
             else:
@@ -33,8 +47,9 @@ def calculadora_humana_normal():
                 stop = False
         elif inicio > 150:
             resta = random.randint(1, 150)
-            operacion = int(input("Menos {} \n".format(resta)))
-            if operacion == inicio - resta:
+            print("Menos {} \n".format(resta))
+            respuesta = preguntar_numero()
+            if respuesta == inicio - resta:
                 contador += 1
                 inicio -= resta
             else:
@@ -42,9 +57,9 @@ def calculadora_humana_normal():
                 stop = False
         else:
             sumar = random.randint(1, 50)
-            operacion = int(input("Más {} \n".format(sumar)))
-
-            if operacion == inicio + sumar:
+            print("Más {} \n".format(sumar))
+            respuesta = preguntar_numero()
+            if respuesta == inicio + sumar:
                 inicio += sumar
                 contador += 1
             else:
@@ -59,13 +74,14 @@ def calculadora_restas():
     print("Empezamos por {}".format(inicio))
     while stop:
         resta = random.randint(1, 30)
-        operacion = int(input("Menos {} \n".format(resta)))
-        if operacion < 30 and operacion == inicio - resta:
-            inicio -= operacion
+        print("Menos {} \n".format(resta))
+        respuesta = preguntar_numero()
+        if respuesta < 30 and respuesta == inicio - resta:
+            inicio -= respuesta
             r = random.randint(3, 6)
-            print("Y {} * {} son {} ".format(operacion, r, operacion * r))
-            inicio = operacion * r
-        elif operacion == inicio - resta:
+            print("Y {} * {} son {} ".format(respuesta, r, respuesta * r))
+            inicio = respuesta * r
+        elif respuesta == inicio - resta:
             contador += 1
             inicio -= resta
         else:
@@ -80,14 +96,14 @@ def calculadora_sumas():
     print("Empezamos por {}".format(inicio))
     while stop:
         sumar = random.randint(1, 50)
-        operacion = int(input("Más {} \n".format(sumar)))
-
-        if operacion == inicio + sumar and operacion < 200:
+        print("Más {} \n".format(sumar))
+        respuesta = preguntar_numero()
+        if respuesta == inicio + sumar and respuesta < 200:
             inicio += sumar
             contador += 1
-        elif operacion == inicio + sumar and operacion >= 200:
+        elif respuesta == inicio + sumar and respuesta >= 200:
             contador += 1
-            print("Y {} menos 150 son {}".format(operacion, operacion - 150))
+            print("Y {} menos 150 son {}".format(respuesta, respuesta - 150))
             inicio += sumar
             inicio -= 150
         else:
@@ -102,7 +118,7 @@ def calculadora_divisiones():
     print("Empezamos por {}".format(inicio))
     while stop:
         dividir = random.randint(2, 15)
-        por = random.randint(50, 301)
+        numero_a_sumar = random.randint(50, 301)
         if primo(int(inicio)) == True:
             inicio = random.randint(50, 150)
             print("El numero era primo, seguimos con", inicio)
@@ -112,8 +128,8 @@ def calculadora_divisiones():
                 contador += 1
                 inicio /= dividir
                 if operacion < 30:
-                    print("Y {} + {} son {}".format(inicio, por, int(inicio + por)))
-                    inicio += por
+                    print("Y {} + {} son {}".format(int(inicio), numero_a_sumar, int(inicio + numero_a_sumar)))
+                    inicio += numero_a_sumar
             else:
                 fallo(contador)
                 stop = False
@@ -125,7 +141,7 @@ def main():
     barra = "*" * 90
     print(barra)
     print("\nBienvenido al juego para entrenar el calculo mental: ¡La calculadora humana! \n"
-          "Este juego puede correr en diferentes maneras, selecciona uno de los siguientes: \n"
+          "Este juego puede correr en diferentes maneras, selecciona uno de los siguientes: \n\n"
           "1 - La calculadora humana normal. \n"
           "2 - La calculadora solo restas. \n"
           "3 - La calculadora solo sumas. \n"
